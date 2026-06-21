@@ -1,0 +1,28 @@
+{
+  "name": "gemini-chatbot",
+  "version": "1.0.0",
+  "description": "A beautiful chatbot application powered by Google Gemini AI",
+  "main": "index.html",
+  "scripts": {
+    "start": "open index.html",
+    "dev": "open index.html"
+  },
+  "keywords": [
+    "chatbot",
+    "gemini",
+    "ai",
+    "google",
+    "chat",
+    "conversation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "browsers": [
+      "Chrome >= 90",
+      "Firefox >= 88",
+      "Safari >= 14",
+      "Edge >= 90"
+    ]
+  }
+}
