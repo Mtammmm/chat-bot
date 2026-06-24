@@ -2,8 +2,6 @@
 
 A beautiful, modern chatbot application powered by Google's Gemini AI API.
 
-**Setup:** Add your API key to `config.js` and you're ready to go!
-
 ## Features
 
 ✨ **Beautiful Modern UI**
@@ -19,14 +17,14 @@ A beautiful, modern chatbot application powered by Google's Gemini AI API.
 - Clear chat history
 
 🔐 **Security**
-- Secure API key input with optional local storage
+- API key stored securely in `config.js` (never commit to git)
 - No API keys sent to third parties
 - All communication directly with Google Gemini API
+- `config.js` is automatically protected by `.gitignore`
 
 ⌨️ **Keyboard Shortcuts**
 - `Enter` - Send message
 - `Shift + Enter` - New line in message
-- `Ctrl + Shift + K` - Change API key
 
 ## Getting Started
 
@@ -37,19 +35,23 @@ A beautiful, modern chatbot application powered by Google's Gemini AI API.
 3. Click "Create API Key"
 4. Copy your API key
 
-### 2. Open the Chatbot
+### 2. Configure Your API Key
+
+1. Open `config.js` in your chat-bot folder
+2. Replace `YOUR_GEMINI_API_KEY_HERE` with your actual API key
+3. Save the file
+
+**Example:**
+```javascript
+const API_KEY = 'AIzaSyAb8RN6LwcYZO3D12K0z-Gc23xF3rSbONqD3iY6l8j';
+```
+
+### 3. Open the Chatbot
 
 Simply open `index.html` in any modern web browser:
 - Double-click `index.html`, or
 - Drag `index.html` into your browser, or
 - Open with your favorite code editor and use Live Server
-
-### 3. Enter Your API Key
-
-1. When the app opens, you'll see an API key prompt
-2. Paste your Gemini API key
-3. Check "Remember this key" to save it locally (optional)
-4. Click "Save API Key"
 
 ### 4. Start Chatting!
 
@@ -62,6 +64,8 @@ chat-bot/
 ├── index.html       # Main HTML structure
 ├── styles.css       # Beautiful styling
 ├── script.js        # Chat logic and API integration
+├── config.js        # API key configuration (⚠️ Keep private!)
+├── .gitignore       # Prevents config.js from being committed
 └── README.md        # This file
 ```
 
@@ -70,14 +74,21 @@ chat-bot/
 1. **Frontend Only** - The chatbot runs entirely in your browser
 2. **Direct API Communication** - Messages are sent directly to Google Gemini API
 3. **No Server Required** - Just open the HTML file in a browser
-4. **Local Storage** - Your API key is stored locally in browser storage (can be cleared anytime)
+4. **Configuration File** - Your API key is stored in `config.js`
 
 ## API Key Security
 
-- Your API key is stored **only locally** in your browser
-- It's **never sent** to any third-party servers
+⚠️ **IMPORTANT:**
+- Your API key is stored in `config.js`
+- **NEVER commit `config.js` to Git or GitHub** - it's in `.gitignore`
+- **NEVER share your API key** publicly
 - All requests go directly to Google Gemini API
-- You can clear it anytime using browser DevTools
+- Keep your API key confidential
+
+**If you accidentally share your API key:**
+1. Delete it immediately from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Generate a new API key
+3. Update `config.js` with the new key
 
 ## System Requirements
 
@@ -114,10 +125,14 @@ generationConfig: {
 
 ## Troubleshooting
 
+### "API key not configured" error
+- Open `config.js` and replace the placeholder with your actual API key
+- Make sure there are no extra spaces around your key
+
 ### "API Key is invalid" error
-- Double-check that you copied the entire API key
-- Make sure there are no extra spaces
-- Generate a new key from Google AI Studio
+- Double-check that you copied the entire API key from Google AI Studio
+- Make sure there are no extra spaces or characters
+- Generate a new key if needed
 
 ### "No response received" error
 - Check your internet connection
@@ -125,7 +140,7 @@ generationConfig: {
 - Try a simpler message
 
 ### Messages not sending
-- Make sure your API key is entered correctly
+- Make sure `config.js` has your API key configured
 - Check browser console for error messages (F12 → Console)
 - Try refreshing the page
 
