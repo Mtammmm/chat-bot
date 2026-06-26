@@ -1,66 +1,93 @@
-# Train AI Model From Scratch - Interview Demo Python
+# Train AI Model From Scratch - Python Interview Demo
 
-Demo này train một model AI cơ bản từ đầu đến cuối bằng Python thuần, không dùng NumPy, scikit-learn hoặc thư viện ML.
+Demo nay train mot model AI tu dau den cuoi bang Python tren du lieu that co san trong scikit-learn: Breast Cancer Wisconsin Diagnostic.
 
-- `train_from_scratch.py`
-- `predict_python.py`
+Script dung:
 
-## Bài toán
+- `numpy` cho vectorized math
+- `scikit-learn` cho load dataset, split data, feature scaling va metrics
+- training loop va gradient descent tu viet, khong dung `LogisticRegression.fit()`
 
-Binary classification: dự đoán một hồ sơ ứng viên phỏng vấn nên được approve hay không dựa trên:
+## Files
 
-- `technical_score`: điểm kỹ thuật 0-100
-- `communication_score`: điểm giao tiếp 0-100
+- `train_from_scratch.py`: train logistic regression bang NumPy gradient descent
+- `predict_python.py`: inference bang model da train
+- `requirements.txt`: dependencies
+- `SLIDE_OUTLINE.md`: goi y noi dung tung slide
 
-Model dùng logistic regression vì dễ giải thích rõ pipeline:
+## Bai Toan
 
-1. Tạo dữ liệu
+Binary classification tren dataset Breast Cancer Wisconsin Diagnostic:
+
+- Input: 30 numeric features tu anh chup te bao, vi du `mean radius`, `mean texture`, `worst area`
+- Output: `malignant` hoac `benign`
+- Positive class trong sklearn dataset la `benign`
+
+Pipeline:
+
+1. Load du lieu that bang `load_breast_cancer()`
 2. Chia train/validation/test
-3. Chuẩn hóa feature
-4. Forward pass
-5. Tính binary cross-entropy loss
-6. Backpropagation/gradient
-7. Gradient descent update
-8. Đánh giá model
-9. Lưu model artifact
+3. Chuan hoa feature bang `StandardScaler`
+4. Forward pass: `p = sigmoid(X @ w + b)`
+5. Tinh binary cross-entropy loss
+6. Tinh gradient bang NumPy
+7. Cap nhat weights bang gradient descent
+8. Danh gia bang accuracy, precision, recall, F1
+9. Luu model artifact
 
-## Chạy demo
+## Chay Demo
 
-Trên máy hiện tại, `python` trong PATH vẫn đang trỏ tới WindowsApps alias. Python thật đang nằm ở:
+Tren may hien tai, `python` trong PATH van dang tro toi WindowsApps alias. Python that dang nam o:
 
 ```text
 C:\Users\GF66 KATANA\AppData\Local\Programs\Python\Python311\python.exe
 ```
 
-Chạy bằng PowerShell:
+Chay bang PowerShell:
 
 ```powershell
 & "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe" train_from_scratch.py
-& "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe" predict_python.py 82 76
+& "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe" predict_python.py
+& "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe" predict_python.py 10
 ```
 
-Sau khi sửa PATH hoặc tắt App Execution Alias của Windows, có thể chạy ngắn gọn:
+Sau khi sua PATH hoac tat App Execution Alias cua Windows:
 
 ```bash
 python train_from_scratch.py
-python predict_python.py 82 76
+python predict_python.py
+python predict_python.py 10
 ```
 
-Kết quả được lưu vào:
+`predict_python.py` co 3 cach dung:
+
+- Khong truyen argument: predict sample 0 trong dataset that
+- Truyen 1 so: predict sample theo index, vi du `10`
+- Truyen du 30 gia tri: predict manual raw feature values
+
+Ket qua duoc luu vao:
 
 - `artifacts/model-python.json`
 - `artifacts/training-history-python.json`
 
-## Cách nói trong phỏng vấn
+Ket qua hien tai tren test set:
 
-Bạn có thể nói ngắn gọn:
+- Loss: `0.0967`
+- Accuracy: `0.9535`
+- Precision: `0.9808`
+- Recall: `0.9444`
+- F1: `0.9623`
 
-> Em chọn logistic regression để minh họa cách train model từ đầu vì nó có đầy đủ các thành phần của training loop: dữ liệu, feature scaling, forward pass, loss function, gradient, update parameters, validation và test. Sau khi hiểu pipeline này, cùng tư duy đó có thể mở rộng sang neural network nhiều layer.
+## Cach Noi Trong Phong Van
 
-Điểm cần nhấn mạnh:
+Ban co the noi:
 
-- Không train trên test set.
-- Validation dùng để quan sát overfitting và chọn hyperparameter.
-- Test chỉ dùng một lần cuối để báo cáo chất lượng.
-- Feature scaling giúp gradient descent ổn định hơn.
-- Loss giảm chưa đủ, cần xem accuracy/precision/recall/F1 theo mục tiêu business.
+> Em dung dataset that Breast Cancer Wisconsin de tranh demo bang du lieu gia. Em dung scikit-learn cho cac buoc infrastructure nhu load data, split, scaling va metrics, nhung phan model hoc thi em tu implement logistic regression bang NumPy: forward pass, binary cross-entropy, gradient va gradient descent update.
+
+Diem can nhan manh:
+
+- Khong train tren test set.
+- Fit scaler chi tren train set de tranh data leakage.
+- Validation dung de quan sat overfitting va chon hyperparameter.
+- Test chi dung mot lan cuoi de bao cao chat luong.
+- Recall quan trong trong bai toan y te vi bo sot case positive/negative co chi phi cao, tuy can dinh nghia positive class ro rang.
