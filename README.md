@@ -1,6 +1,6 @@
 # Train AI Model From Scratch - Python Interview Demo
 
-Demo nay train mot model AI tu dau den cuoi bang Python tren du lieu that co san trong scikit-learn: Breast Cancer Wisconsin Diagnostic.
+Breast Cancer Wisconsin Diagnostic.
 
 Script dung:
 
@@ -13,7 +13,7 @@ Script dung:
 - `train_from_scratch.py`: train logistic regression bang NumPy gradient descent
 - `predict_python.py`: inference bang model da train
 - `requirements.txt`: dependencies
-- `SLIDE_OUTLINE.md`: goi y noi dung tung slide
+
 
 ## Problem
 
