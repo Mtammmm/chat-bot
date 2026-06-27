@@ -15,7 +15,7 @@ Script dung:
 - `requirements.txt`: dependencies
 - `SLIDE_OUTLINE.md`: goi y noi dung tung slide
 
-## Bai Toan
+## Problem
 
 Binary classification tren dataset Breast Cancer Wisconsin Diagnostic:
 
@@ -35,7 +35,7 @@ Pipeline:
 8. Danh gia bang accuracy, precision, recall, F1
 9. Luu model artifact
 
-## Chay Demo
+## Demo
 
 Tren may hien tai, `python` trong PATH van dang tro toi WindowsApps alias. Python that dang nam o:
 
@@ -78,13 +78,7 @@ Ket qua hien tai tren test set:
 - Recall: `0.9444`
 - F1: `0.9623`
 
-## Cach Noi Trong Phong Van
 
-Ban co the noi:
-
-> Em dung dataset that Breast Cancer Wisconsin de tranh demo bang du lieu gia. Em dung scikit-learn cho cac buoc infrastructure nhu load data, split, scaling va metrics, nhung phan model hoc thi em tu implement logistic regression bang NumPy: forward pass, binary cross-entropy, gradient va gradient descent update.
-
-Diem can nhan manh:
 
 - Khong train tren test set.
 - Fit scaler chi tren train set de tranh data leakage.
