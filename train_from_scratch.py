@@ -120,23 +120,7 @@ def main():
         encoding="utf-8",
     )
 
-    print("Dataset")
-    print_table(
-        [
-            {
-                "name": dataset["name"],
-                "samples": features.shape[0],
-                "features": features.shape[1],
-                "target_0": dataset["target_names"][0],
-                "target_1": dataset["target_names"][1],
-            }
-        ]
-    )
-    print("\nTraining checkpoints")
-    print_table(history)
-    print("\nFinal test metrics")
-    print_table([final_metrics["test"]])
-    print("\nSaved artifacts/model-python.json and artifacts/training-history-python.json")
+    print_training_report(dataset, features, labels, history, final_metrics)
 
 
 def load_real_dataset():
@@ -179,6 +163,92 @@ def sigmoid(values):
 
 def compact_metrics(metrics):
     return {key: round(float(value), 4) for key, value in metrics.items()}
+
+
+def print_training_report(dataset, features, labels, history, final_metrics):
+    class_counts = np.bincount(labels)
+
+    print_banner("AI MODEL TRAINING DEMO")
+    print("Task: Predict whether a tumor is malignant or benign")
+    print("Model: Logistic regression trained from scratch with NumPy")
+    print("Data: Real Breast Cancer Wisconsin Diagnostic dataset\n")
+
+    print_section("Dataset Overview")
+    print_key_values(
+        [
+            ("Dataset", dataset["name"]),
+            ("Samples", features.shape[0]),
+            ("Input features", features.shape[1]),
+            ("Class 0", f"{dataset['target_names'][0]} ({class_counts[0]} samples)"),
+            ("Class 1", f"{dataset['target_names'][1]} ({class_counts[1]} samples)"),
+        ]
+    )
+
+    print_section("Training Setup")
+    print_key_values(
+        [
+            ("Train split", "70%"),
+            ("Validation split", "15%"),
+            ("Test split", "15%"),
+            ("Learning rate", CONFIG["learning_rate"]),
+            ("Epochs", CONFIG["epochs"]),
+            ("Random seed", CONFIG["seed"]),
+        ]
+    )
+
+    print_section("Training Progress")
+    progress_rows = [
+        {
+            "epoch": row["epoch"],
+            "train loss": row["train_loss"],
+            "train acc": format_percent(row["train_accuracy"]),
+            "val loss": row["validation_loss"],
+            "val acc": format_percent(row["validation_accuracy"]),
+        }
+        for row in history
+    ]
+    print_table(progress_rows)
+
+    print_section("Final Performance")
+    metric_rows = [
+        {
+            "split": split,
+            "loss": metrics["loss"],
+            "accuracy": format_percent(metrics["accuracy"]),
+            "precision": format_percent(metrics["precision"]),
+            "recall": format_percent(metrics["recall"]),
+            "f1": format_percent(metrics["f1"]),
+        }
+        for split, metrics in final_metrics.items()
+    ]
+    print_table(metric_rows)
+
+    print_section("Artifacts")
+    print("[OK] Saved artifacts/model-python.json")
+    print("[OK] Saved artifacts/training-history-python.json")
+    print("\nNext: run `python predict_python.py 10` to showcase inference.")
+
+
+def print_banner(title):
+    line = "=" * 64
+    print(line)
+    print(title.center(64))
+    print(line)
+
+
+def print_section(title):
+    print(f"\n{title}")
+    print("-" * len(title))
+
+
+def print_key_values(rows):
+    width = max(len(str(key)) for key, _ in rows)
+    for key, value in rows:
+        print(f"{str(key).ljust(width)} : {value}")
+
+
+def format_percent(value):
+    return f"{value * 100:.2f}%"
 
 
 def print_table(rows):
